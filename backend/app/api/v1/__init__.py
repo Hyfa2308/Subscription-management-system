@@ -11,6 +11,7 @@ from app.api.v1 import subscriptions
 from app.api.v1 import invoices
 from app.api.v1 import billing
 from app.api.v1 import discounts
+from app.api.v1 import dashboard
 
 api_router = APIRouter()
 
@@ -42,6 +43,9 @@ api_router.include_router(billing.router,  prefix="/billing")
 
 # ── Discounts ─────────────────────────────────────────────────────────────────
 api_router.include_router(discounts.router, prefix="/discounts")
+
+# ── Dashboard ─────────────────────────────────────────────────────────────────
+api_router.include_router(dashboard.router, prefix="/dashboard")
 
 # ── Future modules ────────────────────────────────────────────────────────────
 # api_router.include_router(payments.router, prefix="/payments")
