@@ -8,6 +8,8 @@ from app.api.v1 import plans
 from app.api.v1 import quotations
 from app.api.v1 import quotation_templates
 from app.api.v1 import subscriptions
+from app.api.v1 import invoices
+from app.api.v1 import billing
 
 api_router = APIRouter()
 
@@ -33,7 +35,10 @@ api_router.include_router(quotation_templates.router, prefix="/quotation-templat
 # ── Subscriptions ─────────────────────────────────────────────────────────────
 api_router.include_router(subscriptions.router, prefix="/subscriptions")
 
+# ── Invoices & Billing ────────────────────────────────────────────────────────
+api_router.include_router(invoices.router, prefix="/invoices")
+api_router.include_router(billing.router,  prefix="/billing")
+
 # ── Future modules ────────────────────────────────────────────────────────────
-# api_router.include_router(invoices.router, prefix="/invoices")
 # api_router.include_router(payments.router, prefix="/payments")
 # api_router.include_router(analytics.router, prefix="/analytics")
