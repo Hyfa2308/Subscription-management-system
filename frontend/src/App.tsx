@@ -29,10 +29,12 @@ import QuotationsPage           from '@/pages/QuotationsPage';
 import QuotationDetailPage      from '@/pages/QuotationDetailPage';
 import QuotationFormPage        from '@/pages/QuotationFormPage';
 import QuotationTemplatesPage   from '@/pages/QuotationTemplatesPage';
+import SubscriptionsPage        from '@/pages/SubscriptionsPage';
+import SubscriptionFormPage     from '@/pages/SubscriptionFormPage';
+import SubscriptionDetailPage   from '@/pages/SubscriptionDetailPage';
 
 // ── Placeholder modules (to be replaced in future prompts) ────────────────────
 import {
-  SubscriptionsPage,
   InvoicesPage,
   DiscountsPage,
   PaymentsPage,
@@ -94,9 +96,10 @@ export function App() {
                   <Route path="/quotations/:id"         element={<QuotationDetailPage />} />
                   <Route path="/quotations/:id/edit"    element={<QuotationFormPage />} />
                   <Route path="/quotation-templates"    element={<QuotationTemplatesPage />} />
-                  <Route path={ROUTES.SUBSCRIPTIONS}         element={<SubscriptionsPage />} />
-                  <Route path={ROUTES.SUBSCRIPTION_NEW}      element={<SubscriptionsPage />} />
-                  <Route path={ROUTES.SUBSCRIPTION_DETAIL}   element={<SubscriptionsPage />} />
+                  {/* ── Subscriptions (fully implemented) ── */}
+                  <Route path={ROUTES.SUBSCRIPTIONS}       element={<SubscriptionsPage />} />
+                  <Route path="/subscriptions/new"         element={<SubscriptionFormPage />} />
+                  <Route path="/subscriptions/:id"         element={<SubscriptionDetailPage />} />
                   <Route path={ROUTES.INVOICES}              element={<InvoicesPage />} />
                   <Route path={ROUTES.INVOICE_DETAIL}        element={<InvoicesPage />} />
                   <Route path={ROUTES.DISCOUNTS}             element={<DiscountsPage />} />
