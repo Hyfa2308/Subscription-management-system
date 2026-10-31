@@ -43,8 +43,9 @@ export const ROUTES = {
   PAYMENTS: '/payments',
 
   // Intelligence
-  CUSTOMER_INTELLIGENCE: '/customer-intelligence',
-  REVENUE_INTELLIGENCE:  '/revenue-intelligence',
+  CUSTOMER_INTELLIGENCE:        '/customer-intelligence',
+  CUSTOMER_INTELLIGENCE_DETAIL: '/customer-intelligence/customers/:id',
+  REVENUE_INTELLIGENCE:         '/revenue-intelligence',
   REVENUE_RESCUE:        '/revenue-rescue',
   AI_ASSISTANT:          '/assistant',
 

@@ -23,6 +23,10 @@ api_router.include_router(products.router, prefix="/products")
 # ── Subscription Plans ────────────────────────────────────────────────────────
 api_router.include_router(plans.router, prefix="/plans")
 
+# ── Customer Intelligence & Churn Prediction ─────────────────────────────────
+from app.api.v1 import customer_intelligence
+api_router.include_router(customer_intelligence.router, prefix="/intelligence")
+
 # ── Future modules (uncomment as implemented) ─────────────────────────────────
 # api_router.include_router(subscriptions.router, prefix="/subscriptions")
 # api_router.include_router(invoices.router, prefix="/invoices")
