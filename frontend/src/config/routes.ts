@@ -4,37 +4,51 @@
  */
 
 export const ROUTES = {
+  // Auth
+  LOGIN:    '/login',
+  REGISTER: '/register',
+
   // Core
   DASHBOARD: '/',
-  
+
   // Customer Management
-  CUSTOMERS: '/customers',
+  CUSTOMERS:       '/customers',
   CUSTOMER_DETAIL: '/customers/:id',
-  CUSTOMER_NEW: '/customers/new',
+  CUSTOMER_NEW:    '/customers/new',
 
   // Products & Plans
-  PRODUCTS: '/products',
+  PRODUCTS:       '/products',
   PRODUCT_DETAIL: '/products/:id',
+  PLANS:          '/plans',
+
+  // Quotations
+  QUOTATIONS:       '/quotations',
+  QUOTATION_DETAIL: '/quotations/:id',
 
   // Subscriptions
-  SUBSCRIPTIONS: '/subscriptions',
+  SUBSCRIPTIONS:       '/subscriptions',
   SUBSCRIPTION_DETAIL: '/subscriptions/:id',
-  SUBSCRIPTION_NEW: '/subscriptions/new',
+  SUBSCRIPTION_NEW:    '/subscriptions/new',
 
   // Billing & Invoices
-  INVOICES: '/invoices',
+  INVOICES:       '/invoices',
   INVOICE_DETAIL: '/invoices/:id',
+
+  // Discounts
+  DISCOUNTS: '/discounts',
 
   // Payments
   PAYMENTS: '/payments',
 
-  // Revenue Intelligence
-  ANALYTICS: '/analytics',
-  REVENUE_RESCUE: '/revenue-rescue',
+  // Intelligence
+  CUSTOMER_INTELLIGENCE: '/customer-intelligence',
+  REVENUE_INTELLIGENCE:  '/revenue-intelligence',
+  REVENUE_RESCUE:        '/revenue-rescue',
+  AI_ASSISTANT:          '/assistant',
 
   // Settings
   SETTINGS: '/settings',
 } as const;
 
-export type RouteKey = keyof typeof ROUTES;
+export type RouteKey  = keyof typeof ROUTES;
 export type RoutePath = (typeof ROUTES)[RouteKey];
