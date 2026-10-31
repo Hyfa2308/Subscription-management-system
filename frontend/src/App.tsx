@@ -23,10 +23,11 @@ import CustomersPage      from '@/pages/CustomersPage';
 import CustomerDetailPage from '@/pages/CustomerDetailPage';
 import ProductsPage       from '@/pages/ProductsPage';
 import ProductDetailPage  from '@/pages/ProductDetailPage';
+import PlansPage          from '@/pages/PlansPage';
+import PlanDetailPage     from '@/pages/PlanDetailPage';
 
 // ── Placeholder modules (to be replaced in future prompts) ────────────────────
 import {
-  PlansPage,
   QuotationsPage,
   SubscriptionsPage,
   InvoicesPage,
@@ -80,7 +81,10 @@ export function App() {
                   <Route path={ROUTES.PRODUCTS}        element={<ProductsPage />} />
                   <Route path="/products/:id"          element={<ProductDetailPage />} />
 
-                  <Route path={ROUTES.PLANS}                 element={<PlansPage />} />
+                  {/* ── Plans (fully implemented) ── */}
+                  <Route path={ROUTES.PLANS}  element={<PlansPage />} />
+                  <Route path="/plans/:id"    element={<PlanDetailPage />} />
+
                   <Route path={ROUTES.QUOTATIONS}            element={<QuotationsPage />} />
                   <Route path={ROUTES.QUOTATION_DETAIL}      element={<QuotationsPage />} />
                   <Route path={ROUTES.SUBSCRIPTIONS}         element={<SubscriptionsPage />} />
