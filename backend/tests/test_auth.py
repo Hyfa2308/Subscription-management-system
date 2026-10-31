@@ -1,67 +1,16 @@
 """
 REVORA – Authentication API tests.
-
-Uses SQLAlchemy StaticPool so all connections (TestClient + fixtures) share the
-same in-memory SQLite database within a single test process.
+Engine/fixtures provided by conftest.py.
 """
 
 from __future__ import annotations
 
-import pytest
-from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 from datetime import timedelta
 
-# ── Shared in-memory engine via StaticPool ─────────────────────────────────────
-engine_test = create_engine(
-    "sqlite://",                       # in-memory
-    connect_args={"check_same_thread": False},
-    poolclass=StaticPool,              # single shared connection
-)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine_test)
+import pytest
 
-# ── App imports ────────────────────────────────────────────────────────────────
-from app.main import app as fastapi_app
-from app.database.session import Base, get_db
 from app.models.user import User, UserRole
 from app.core.security import create_access_token, hash_password
-import app.models  # noqa: F401 – ensures all models are in metadata
-
-
-def override_get_db():
-    db = TestingSessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-fastapi_app.dependency_overrides[get_db] = override_get_db
-
-# ── Fixtures ───────────────────────────────────────────────────────────────────
-
-@pytest.fixture(autouse=True)
-def setup_db():
-    """Create tables before each test and drop them after."""
-    Base.metadata.create_all(bind=engine_test)
-    yield
-    Base.metadata.drop_all(bind=engine_test)
-
-
-@pytest.fixture
-def client():
-    return TestClient(fastapi_app)
-
-
-@pytest.fixture
-def db():
-    session = TestingSessionLocal()
-    try:
-        yield session
-    finally:
-        session.close()
 
 
 # ── Helper ─────────────────────────────────────────────────────────────────────

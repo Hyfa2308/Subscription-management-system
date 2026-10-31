@@ -21,10 +21,11 @@ import ResetPasswordPage  from '@/pages/auth/ResetPasswordPage';
 import DashboardPage      from '@/pages/DashboardPage';
 import CustomersPage      from '@/pages/CustomersPage';
 import CustomerDetailPage from '@/pages/CustomerDetailPage';
+import ProductsPage       from '@/pages/ProductsPage';
+import ProductDetailPage  from '@/pages/ProductDetailPage';
 
 // ── Placeholder modules (to be replaced in future prompts) ────────────────────
 import {
-  ProductsPage,
   PlansPage,
   QuotationsPage,
   SubscriptionsPage,
@@ -75,9 +76,10 @@ export function App() {
                   <Route path={ROUTES.CUSTOMERS}       element={<CustomersPage />} />
                   <Route path="/customers/:id"         element={<CustomerDetailPage />} />
 
-                  {/* ── Placeholder modules ── */}
-                  <Route path={ROUTES.PRODUCTS}              element={<ProductsPage />} />
-                  <Route path={ROUTES.PRODUCT_DETAIL}        element={<ProductsPage />} />
+                  {/* ── Products (fully implemented) ── */}
+                  <Route path={ROUTES.PRODUCTS}        element={<ProductsPage />} />
+                  <Route path="/products/:id"          element={<ProductDetailPage />} />
+
                   <Route path={ROUTES.PLANS}                 element={<PlansPage />} />
                   <Route path={ROUTES.QUOTATIONS}            element={<QuotationsPage />} />
                   <Route path={ROUTES.QUOTATION_DETAIL}      element={<QuotationsPage />} />

@@ -1,64 +1,15 @@
 """
 REVORA – Customer API tests.
-13 test scenarios covering all customer management endpoints.
-Uses StaticPool shared in-memory SQLite (same pattern as auth tests).
+Engine/fixtures provided by conftest.py.
 """
 
 from __future__ import annotations
 
-from datetime import timedelta
-
 import pytest
-from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.pool import StaticPool
 
-engine_test = create_engine(
-    "sqlite://",
-    connect_args={"check_same_thread": False},
-    poolclass=StaticPool,
-)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine_test)
-
-from app.main import app as fastapi_app
-from app.database.session import Base, get_db
 from app.models.user import User, UserRole
 from app.models.customer import Customer, CustomerStatus
 from app.core.security import create_access_token, hash_password
-import app.models  # noqa: F401
-
-
-def override_get_db():
-    db = TestingSessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-
-fastapi_app.dependency_overrides[get_db] = override_get_db
-
-
-@pytest.fixture(autouse=True)
-def setup_db():
-    Base.metadata.create_all(bind=engine_test)
-    yield
-    Base.metadata.drop_all(bind=engine_test)
-
-
-@pytest.fixture
-def client():
-    return TestClient(fastapi_app)
-
-
-@pytest.fixture
-def db():
-    session = TestingSessionLocal()
-    try:
-        yield session
-    finally:
-        session.close()
 
 
 # ── Helpers ────────────────────────────────────────────────────────────────────
@@ -224,39 +175,26 @@ def test_reject_unauthorized(client, db):
 # ── 12. Customer-role ownership restriction ────────────────────────────────────
 
 def test_customer_ownership_restriction(client, db):
-    admin       = make_user(db, email="admin@test.com", role=UserRole.ADMIN)
-    cust_user   = make_user(db, email="jane@example.com", role=UserRole.CUSTOMER)
-    # Admin creates a customer with Jane's email
-    client.post(
-        "/api/v1/customers",
-        json={**PAYLOAD, "email": "jane@example.com"},
-        headers=auth_headers(admin),
-    )
-    # Admin creates another customer
-    other = client.post(
-        "/api/v1/customers",
-        json={**PAYLOAD, "email": "other@example.com"},
-        headers=auth_headers(admin),
-    ).json()
-
-    # Jane (customer-role) cannot access the other customer's record
+    admin     = make_user(db, email="admin@test.com",  role=UserRole.ADMIN)
+    cust_user = make_user(db, email="jane@example.com", role=UserRole.CUSTOMER)
+    client.post("/api/v1/customers", json={**PAYLOAD, "email": "jane@example.com"}, headers=auth_headers(admin))
+    other = client.post("/api/v1/customers", json={**PAYLOAD, "email": "other@example.com"}, headers=auth_headers(admin)).json()
     r = client.get(f"/api/v1/customers/{other['id']}", headers=auth_headers(cust_user))
     assert r.status_code == 403
 
 
-# ── 13. Archived customer status is visible ────────────────────────────────────
+# ── 13. Archived customer visible in filter ────────────────────────────────────
 
 def test_archived_customer_visible_in_filter(client, db):
     admin   = make_user(db)
     created = client.post("/api/v1/customers", json=PAYLOAD, headers=auth_headers(admin)).json()
     client.delete(f"/api/v1/customers/{created['id']}", headers=auth_headers(admin))
-
     r = client.get("/api/v1/customers?status=archived", headers=auth_headers(admin))
     assert r.status_code == 200
     assert r.json()["total"] >= 1
 
 
-# ── Bonus: Stats endpoint ──────────────────────────────────────────────────────
+# ── Bonus: Stats ───────────────────────────────────────────────────────────────
 
 def test_get_stats(client, db):
     admin = make_user(db)
