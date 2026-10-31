@@ -6,3 +6,4 @@ from app.models.plan import SubscriptionPlan, BillingFrequency, PlanStatus  # no
 from app.models.quotation import Quotation, QuotationItem, QuotationTemplate, QuotationStatus, VALID_TRANSITIONS  # noqa: F401
 from app.models.subscription import Subscription, SubscriptionActivity, SubscriptionStatus, SUBSCRIPTION_TRANSITIONS, ActivityAction  # noqa: F401
 from app.models.invoice import Invoice, InvoiceItem, BillingRun, InvoiceStatus  # noqa: F401
+from app.models.discount import Discount, DiscountRedemption, DiscountType, DiscountStatus, DiscountApplicableTo, RedemptionStatus  # noqa: F401

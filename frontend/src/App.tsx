@@ -36,9 +36,12 @@ import InvoicesPage             from '@/pages/InvoicesPage';
 import InvoiceDetailPage        from '@/pages/InvoiceDetailPage';
 import InvoiceFormPage          from '@/pages/InvoiceFormPage';
 
+import DiscountsPage            from '@/pages/DiscountsPage';
+import DiscountFormPage         from '@/pages/DiscountFormPage';
+import DiscountDetailPage       from '@/pages/DiscountDetailPage';
+
 // ── Placeholder modules (to be replaced in future prompts) ────────────────────
 import {
-  DiscountsPage,
   PaymentsPage,
   CustomerIntelligencePage,
   RevenueIntelligencePage,
@@ -106,7 +109,11 @@ export function App() {
                   <Route path={ROUTES.INVOICES}       element={<InvoicesPage />} />
                   <Route path="/invoices/new"         element={<InvoiceFormPage />} />
                   <Route path="/invoices/:id"         element={<InvoiceDetailPage />} />
-                  <Route path={ROUTES.DISCOUNTS}             element={<DiscountsPage />} />
+                  {/* ── Discounts (fully implemented) ── */}
+                  <Route path={ROUTES.DISCOUNTS}       element={<DiscountsPage />} />
+                  <Route path="/discounts/new"         element={<DiscountFormPage />} />
+                  <Route path="/discounts/:id"         element={<DiscountDetailPage />} />
+                  <Route path="/discounts/:id/edit"    element={<DiscountFormPage />} />
                   <Route path={ROUTES.PAYMENTS}              element={<PaymentsPage />} />
                   <Route path={ROUTES.CUSTOMER_INTELLIGENCE} element={<CustomerIntelligencePage />} />
                   <Route path={ROUTES.REVENUE_INTELLIGENCE}  element={<RevenueIntelligencePage />} />

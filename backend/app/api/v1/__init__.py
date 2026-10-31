@@ -10,6 +10,7 @@ from app.api.v1 import quotation_templates
 from app.api.v1 import subscriptions
 from app.api.v1 import invoices
 from app.api.v1 import billing
+from app.api.v1 import discounts
 
 api_router = APIRouter()
 
@@ -38,6 +39,9 @@ api_router.include_router(subscriptions.router, prefix="/subscriptions")
 # ── Invoices & Billing ────────────────────────────────────────────────────────
 api_router.include_router(invoices.router, prefix="/invoices")
 api_router.include_router(billing.router,  prefix="/billing")
+
+# ── Discounts ─────────────────────────────────────────────────────────────────
+api_router.include_router(discounts.router, prefix="/discounts")
 
 # ── Future modules ────────────────────────────────────────────────────────────
 # api_router.include_router(payments.router, prefix="/payments")
