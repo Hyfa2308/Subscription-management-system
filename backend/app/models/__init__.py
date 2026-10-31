@@ -1,2 +1,2 @@
-# REVORA Models – SQLAlchemy ORM models will be added per module.
-# Import Base from app.database.session and define models here.
+# REVORA – models package
+from app.models.user import User, UserRole  # noqa: F401

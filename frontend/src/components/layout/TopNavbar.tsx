@@ -21,6 +21,8 @@ import {
 import { cn } from '@/utils/cn';
 import { useClickOutside } from '@/hooks/useClickOutside';
 import { useSidebarContext } from '@/context/SidebarContext';
+import { useAuth } from '@/context/AuthContext';
+import { ROLE_LABELS } from '@/types/auth';
 import { ROUTES } from '@/config/routes';
 
 // ── Breadcrumbs ────────────────────────────────────────────────────────────────
@@ -184,6 +186,19 @@ function ProfileDropdown() {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null!);
   useClickOutside(ref, () => setOpen(false));
+  const { user, logout } = useAuth();
+
+  const initials = user?.full_name
+    .split(' ')
+    .slice(0, 2)
+    .map(n => n[0])
+    .join('')
+    .toUpperCase() ?? '?';
+
+  const handleLogout = async () => {
+    setOpen(false);
+    await logout();
+  };
 
   return (
     <div ref={ref} className="relative">
@@ -197,12 +212,12 @@ function ProfileDropdown() {
         aria-label="User menu"
         aria-expanded={open}
       >
-        <div className="w-7 h-7 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
-          <UserCircle className="w-4 h-4 text-indigo-600" />
+        <div className="w-7 h-7 rounded-full bg-indigo-600 flex items-center justify-center flex-shrink-0 text-white text-xs font-bold">
+          {initials}
         </div>
         <div className="hidden md:block text-left">
-          <p className="text-xs font-semibold text-slate-800 leading-none">Admin User</p>
-          <p className="text-[10px] text-slate-400 leading-none mt-0.5">Administrator</p>
+          <p className="text-xs font-semibold text-slate-800 leading-none truncate max-w-[100px]">{user?.full_name}</p>
+          <p className="text-[10px] text-slate-400 leading-none mt-0.5">{user ? ROLE_LABELS[user.role] : ''}</p>
         </div>
         <ChevronDown className={cn('w-3.5 h-3.5 text-slate-400 transition-transform duration-200 hidden md:block', open && 'rotate-180')} />
       </button>
@@ -214,56 +229,52 @@ function ProfileDropdown() {
         )}>
           {/* Header */}
           <div className="flex items-center gap-3 px-4 py-3.5 border-b border-slate-100">
-            <div className="w-9 h-9 rounded-full bg-indigo-100 flex items-center justify-center flex-shrink-0">
-              <UserCircle className="w-5 h-5 text-indigo-600" />
+            <div className="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center flex-shrink-0 text-white font-bold text-sm">
+              {initials}
             </div>
             <div className="min-w-0">
-              <p className="text-sm font-semibold text-slate-900 truncate">Admin User</p>
-              <p className="text-xs text-slate-500 truncate">admin@brightloop.io</p>
+              <p className="text-sm font-semibold text-slate-900 truncate">{user?.full_name}</p>
+              <p className="text-xs text-slate-500 truncate">{user?.email}</p>
+              {user && (
+                <span className="inline-block mt-0.5 text-[10px] font-semibold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded-full">
+                  {ROLE_LABELS[user.role]}
+                </span>
+              )}
             </div>
           </div>
 
           {/* Menu items */}
           <div className="py-1.5">
-            {PROFILE_MENU.map(({ icon: Icon, label, sublabel, href }) =>
-              href ? (
-                <Link
-                  key={label}
-                  to={href}
-                  className="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors"
-                  onClick={() => setOpen(false)}
-                >
-                  <Icon className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-medium text-slate-700">{label}</p>
-                    <p className="text-xs text-slate-400">{sublabel}</p>
-                  </div>
-                </Link>
-              ) : (
-                <button
-                  key={label}
-                  className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors text-left"
-                  onClick={() => setOpen(false)}
-                >
-                  <Icon className="w-4 h-4 text-slate-500 flex-shrink-0" />
-                  <div>
-                    <p className="text-sm font-medium text-slate-700">{label}</p>
-                    <p className="text-xs text-slate-400">{sublabel}</p>
-                  </div>
-                </button>
-              ),
+            {user?.role === 'admin' && (
+              <Link
+                to={ROUTES.SETTINGS}
+                className="flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors"
+                onClick={() => setOpen(false)}
+              >
+                <Settings className="w-4 h-4 text-slate-500 flex-shrink-0" />
+                <div>
+                  <p className="text-sm font-medium text-slate-700">Settings</p>
+                  <p className="text-xs text-slate-400">Account preferences</p>
+                </div>
+              </Link>
             )}
+            <button
+              className="w-full flex items-center gap-3 px-4 py-2.5 hover:bg-slate-50 transition-colors text-left"
+              onClick={() => setOpen(false)}
+            >
+              <HelpCircle className="w-4 h-4 text-slate-500 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-medium text-slate-700">Help</p>
+                <p className="text-xs text-slate-400">Documentation & support</p>
+              </div>
+            </button>
           </div>
 
           {/* Logout */}
           <div className="border-t border-slate-100 py-1.5">
             <button
               className="w-full flex items-center gap-3 px-4 py-2.5 text-red-600 hover:bg-red-50 transition-colors"
-              onClick={() => {
-                setOpen(false);
-                // Authentication module will handle actual logout
-                alert('Sign-out will be available after the authentication module is implemented.');
-              }}
+              onClick={handleLogout}
             >
               <LogOut className="w-4 h-4 flex-shrink-0" />
               <span className="text-sm font-medium">Sign out</span>

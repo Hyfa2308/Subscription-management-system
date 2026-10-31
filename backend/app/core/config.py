@@ -54,6 +54,16 @@ class Settings(BaseSettings):
     secret_key: str = "CHANGE_ME_IN_PRODUCTION"
     algorithm: str = "HS256"
     access_token_expire_minutes: int = 60
+    reset_token_expire_minutes: int = 15
+
+    # DEV ONLY: if true, the forgot-password response includes the raw reset token
+    # so developers can test without an SMTP server. NEVER enable in production.
+    dev_return_reset_token: bool = True
+
+    # ── Admin seed (used by scripts/seed_admin.py) ──────────────────────────
+    admin_seed_name:     str = ""
+    admin_seed_email:    str = ""
+    admin_seed_password: str = ""
 
     # ── CORS ─────────────────────────────────────────────────────────────────
     allowed_origins: str = "http://localhost:5173,http://localhost:3000"

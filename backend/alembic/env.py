@@ -22,7 +22,7 @@ from app.core.config import get_settings
 from app.database.session import Base
 
 # Import all models so Alembic can detect them for autogenerate
-# Add future model imports here as modules are built:
+from app.models import user  # noqa: F401  ← users table
 # from app.models import customer, product, subscription  # noqa: F401
 
 settings = get_settings()
