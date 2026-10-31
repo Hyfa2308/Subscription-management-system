@@ -25,6 +25,8 @@ import ProductsPage       from '@/pages/ProductsPage';
 import ProductDetailPage  from '@/pages/ProductDetailPage';
 import PlansPage          from '@/pages/PlansPage';
 import PlanDetailPage     from '@/pages/PlanDetailPage';
+import CustomerIntelligencePage from '@/pages/CustomerIntelligencePage';
+import CustomerIntelligenceDetailPage from '@/pages/CustomerIntelligenceDetailPage';
 
 // ── Placeholder modules (to be replaced in future prompts) ────────────────────
 import {
@@ -33,7 +35,6 @@ import {
   InvoicesPage,
   DiscountsPage,
   PaymentsPage,
-  CustomerIntelligencePage,
   RevenueIntelligencePage,
   RevenueRescuePage,
   AIAssistantPage,
@@ -94,8 +95,9 @@ export function App() {
                   <Route path={ROUTES.INVOICE_DETAIL}        element={<InvoicesPage />} />
                   <Route path={ROUTES.DISCOUNTS}             element={<DiscountsPage />} />
                   <Route path={ROUTES.PAYMENTS}              element={<PaymentsPage />} />
-                  <Route path={ROUTES.CUSTOMER_INTELLIGENCE} element={<CustomerIntelligencePage />} />
-                  <Route path={ROUTES.REVENUE_INTELLIGENCE}  element={<RevenueIntelligencePage />} />
+                  <Route path={ROUTES.CUSTOMER_INTELLIGENCE}        element={<CustomerIntelligencePage />} />
+                  <Route path={ROUTES.CUSTOMER_INTELLIGENCE_DETAIL} element={<CustomerIntelligenceDetailPage />} />
+                  <Route path={ROUTES.REVENUE_INTELLIGENCE}         element={<RevenueIntelligencePage />} />
                   <Route path={ROUTES.REVENUE_RESCUE}        element={<RevenueRescuePage />} />
                   <Route path={ROUTES.AI_ASSISTANT}          element={<AIAssistantPage />} />
                   <Route path={ROUTES.SETTINGS}              element={<SettingsPage />} />

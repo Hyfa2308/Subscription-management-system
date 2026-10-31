@@ -19,6 +19,7 @@ from app.core.exceptions import (
 )
 from app.api.v1 import api_router
 from app.database.session import Base, engine
+import app.models  # noqa: F401 – ensures all tables registered in Base.metadata
 
 settings = get_settings()
 
