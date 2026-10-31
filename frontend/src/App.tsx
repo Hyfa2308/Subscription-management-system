@@ -23,12 +23,15 @@ import CustomersPage      from '@/pages/CustomersPage';
 import CustomerDetailPage from '@/pages/CustomerDetailPage';
 import ProductsPage       from '@/pages/ProductsPage';
 import ProductDetailPage  from '@/pages/ProductDetailPage';
-import PlansPage          from '@/pages/PlansPage';
-import PlanDetailPage     from '@/pages/PlanDetailPage';
+import PlansPage                from '@/pages/PlansPage';
+import PlanDetailPage           from '@/pages/PlanDetailPage';
+import QuotationsPage           from '@/pages/QuotationsPage';
+import QuotationDetailPage      from '@/pages/QuotationDetailPage';
+import QuotationFormPage        from '@/pages/QuotationFormPage';
+import QuotationTemplatesPage   from '@/pages/QuotationTemplatesPage';
 
 // ── Placeholder modules (to be replaced in future prompts) ────────────────────
 import {
-  QuotationsPage,
   SubscriptionsPage,
   InvoicesPage,
   DiscountsPage,
@@ -85,8 +88,12 @@ export function App() {
                   <Route path={ROUTES.PLANS}  element={<PlansPage />} />
                   <Route path="/plans/:id"    element={<PlanDetailPage />} />
 
-                  <Route path={ROUTES.QUOTATIONS}            element={<QuotationsPage />} />
-                  <Route path={ROUTES.QUOTATION_DETAIL}      element={<QuotationsPage />} />
+                  {/* ── Quotations (fully implemented) ── */}
+                  <Route path={ROUTES.QUOTATIONS}       element={<QuotationsPage />} />
+                  <Route path="/quotations/new"         element={<QuotationFormPage />} />
+                  <Route path="/quotations/:id"         element={<QuotationDetailPage />} />
+                  <Route path="/quotations/:id/edit"    element={<QuotationFormPage />} />
+                  <Route path="/quotation-templates"    element={<QuotationTemplatesPage />} />
                   <Route path={ROUTES.SUBSCRIPTIONS}         element={<SubscriptionsPage />} />
                   <Route path={ROUTES.SUBSCRIPTION_NEW}      element={<SubscriptionsPage />} />
                   <Route path={ROUTES.SUBSCRIPTION_DETAIL}   element={<SubscriptionsPage />} />

@@ -5,6 +5,8 @@ from app.api.v1 import auth
 from app.api.v1 import customers
 from app.api.v1 import products
 from app.api.v1 import plans
+from app.api.v1 import quotations
+from app.api.v1 import quotation_templates
 
 api_router = APIRouter()
 
@@ -23,7 +25,11 @@ api_router.include_router(products.router, prefix="/products")
 # ── Subscription Plans ────────────────────────────────────────────────────────
 api_router.include_router(plans.router, prefix="/plans")
 
-# ── Future modules (uncomment as implemented) ─────────────────────────────────
+# ── Quotations ────────────────────────────────────────────────────────────────
+api_router.include_router(quotations.router,          prefix="/quotations")
+api_router.include_router(quotation_templates.router, prefix="/quotation-templates")
+
+# ── Future modules ────────────────────────────────────────────────────────────
 # api_router.include_router(subscriptions.router, prefix="/subscriptions")
 # api_router.include_router(invoices.router, prefix="/invoices")
 # api_router.include_router(payments.router, prefix="/payments")
